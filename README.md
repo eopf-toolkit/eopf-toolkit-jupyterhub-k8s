@@ -113,3 +113,17 @@ helm upgrade --kubeconfig=kubeconfig.yml --cleanup-on-fail \
   --version=4.2.0 \
   --values config.yaml
 ```
+
+## Updated image for users to include more packages
+
+This involved taking the https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-datascience-notebook image and installing any packages not included that weren't in the list in the ticket _or_ in the environment provided in the CNG workshop
+
+Full list of extra installed packages is in the `requirements.txt` file.
+
+The `Dockerfile` and `Makefile` can be used to create and push a new image to the private registry in OVH which the cluster will use for single users.
+
+The tag pushed must be updated in the `tag` section of the `singleUsers` configuration in `config.yaml`
+
+## Manually created a secret for GitHub OAuth values
+
+I created `github-outh-secret` manually on the cluster and modified `config.yaml` so this is injected into the hub service. Saves having these accidentally commited in the `config.yaml` file.
